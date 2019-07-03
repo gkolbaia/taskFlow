@@ -1,0 +1,35 @@
+
+.example-icon {
+  padding: 0 14px;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-sidenav-container{
+  height: 100%
+}
+mat-sidenav , mat-sidenav-content{
+  padding:16px;
+}
+mat-sidenav{
+ background-color: #eee;
+ min-width:250px;
+}
+::ng-deep .mat-toolbar{
+  background-color: #3f51b5 !important
+}
+::ng-deep .mat-fab:not([class*=mat-elevation-z]), .mat-mini-fab:not([class*=mat-elevation-z]) {
+  background-color: #d42460
+}
+::ng-deep .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content{
+  padding: 0 !important
+}
+::ng-deep mat-sidenav[_ngcontent-dxy-c2], mat-sidenav-content[_ngcontent-dxy-c2]{
+  padding: 0 !important
+}
+.menu-item{
+  cursor: pointer;
+}
+::ng-deep .menu-item.mat-list-item.active {
+  color: #2196f3 !important;
+}

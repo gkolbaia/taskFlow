@@ -3,23 +3,26 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const localStorage = require('localStorage')
+const localStorage = require('localStorage');
+const multer = require('multer');
+const fs = require('fs')
 
 require('../models/staff');
 const StaffModel = mongoose.model('staff');
-const verify = require('../helpers/verify')
-const getId = require('../helpers/getUserId')
+const verify = require('../helpers/verify');
+const getId = require('../helpers/getUserId');
+const upload = require('../helpers/imageUpload');
 
 router.post('/register', (req, res) => {
     StaffModel.findOne({ userName: req.body.userName }, (err, user) => {
         if (err) {
-            console.log(err);
+            res.status(500).send('something went wrong')
         } else if (user) {
             res.status(400).send('This User Name Already Exists')
         } else if (!user) {
             StaffModel.findOne({ email: req.body.email }, (err, user) => {
                 if (err) {
-                    console.log(err);
+                    res.status(500).send('something went wrong')
                 } else if (user) {
                     res.status(400).send('This Email Already Exists')
                 } else if (!user) {
@@ -34,7 +37,7 @@ router.post('/register', (req, res) => {
                                     let payload = { userId: savedUser._id };
                                     let token = jwt.sign(payload, 'SecretKey', { expiresIn: '1h' });
                                     localStorage.setItem('token', token)
-                                    res.status(200).send({ token: token, user: savedUser })
+                                    res.status(200).send({ token: token, staff: savedUser })
                                 });
                         }
                     })
@@ -82,6 +85,27 @@ router.get('/permission', verify, (req, res) => {
 });
 router.get('/logout', (req, res) => {
     localStorage.removeItem('token');
-    res.status(200).send(localStorage.getItem('token'))
+    res.status(200).send({})
+    // res.status(200).send(localStorage.getItem('token'));
+});
+router.post('/imageUpload', (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            if (req.file === undefined) {
+                res.status(400).send('undefined');
+            } else {
+                StaffModel.findOne({ userName: req.file.originalname.split('.')[0] }, (err, staff) => {
+                    if (err) {
+                        res.status(500).send('something went wrong')
+                    } else {
+                        staff.imagePath = req.file.path;
+                        staff.save(savedAuthor => res.status(200).send(req.file));
+                    }
+                })
+            }
+        }
+    })
 });
 module.exports = router

@@ -20,6 +20,7 @@ const StaffSchema = new Schema({
     role: {
         type: String,
         required: true
-    }
+    },
+    imagePath: String
 });
 mongoose.model('staff', StaffSchema)

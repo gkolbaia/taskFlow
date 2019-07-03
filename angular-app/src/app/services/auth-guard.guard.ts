@@ -22,7 +22,7 @@ export class AuthGuardGuard implements CanActivate {
   }
   checkLogin(url: string) {
     return this._service.isLoggedIn.pipe(tap((isLoggedIn) => {
-      if (isLoggedIn) { return }
+      if (isLoggedIn) { return };
       this._router.navigate(['/'])
     }));
   }

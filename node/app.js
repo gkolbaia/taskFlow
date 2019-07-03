@@ -10,29 +10,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.json());
+app.use(express.static('./public'));
 const generateNewToken = require('./helpers/generateNewToken');
-app.use('/', generateNewToken)
-const verify = require('./helpers/verify')
+const verifyAdmin = require('./helpers/verifyAdmin');
+app.use('/', generateNewToken);
 const auth = require('./routes/auth');
-const getUserId = require('./helpers/getUserId');
-require('./models/staff');
-const UserModel = mongoose.model('staff');
+const shared = require('./routes/both')
+const admin = require('./routes/admin');
 
 
 
-app.get('/getuser', verify, (req, res) => {
-    const id = getUserId(req, res);
-    UserModel.findById(id, (err, user) => {
-        if (err) {
-            res.status(500).send('Something Went Wrong')
-        } else if (!user) {
-            res.status(404).send('Cant Find That User');
-        } else if (user) {
-            res.status(200).send(user)
-        }
-    })
-});
+
+app.use('/admin', admin);
 app.use('/auth', auth);
+app.use('/shared', shared);
 const port = 5000;
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)

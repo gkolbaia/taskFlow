@@ -1,1 +1,49 @@
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>
+      <h1><a [routerLink]="['/staff/home']" style="color:white;text-decoration:none">Home</a></h1>
+    </span>
+    <span class="example-spacer">
+    </span>
+    <!-- მენიუ -->
+    <button mat-mini-fab [matMenuTriggerFor]="menu" color="primary">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <a [routerLink]="['/staff/profile']" style="text-decoration:none" mat-menu-item>Profile</a>
+      <a href="javascript:" (click)="logout()" style="text-decoration:none" mat-menu-item>logout</a>
+    </mat-menu>
+    <!-- მენიუ -->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-sidenav-container>
+  <!-- SIDNAV -->
+  <mat-sidenav mode="side" opened class="mat-elevation-z8">
+    <mat-list role="list">
+      <!-- <h3 mat-subheader>Folders</h3> -->
+      <mat-list-item [routerLink]="['/staff/profile']" class="menu-item" routerlinkactive="active" role="listitem"
+        [class.active]="isProfileActive">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <h4 mat-line>Profile</h4>
+      </mat-list-item>
+
+
+      <mat-list-item [routerLink]="['/staff/profile']" class="menu-item" routerlinkactive="active" role="listitem">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <h4 mat-line>Profile</h4>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/staff/profile']" class="menu-item" routerlinkactive="active" role="listitem">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <h4 mat-line>Profile</h4>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+
+  <!-- PAGE -->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

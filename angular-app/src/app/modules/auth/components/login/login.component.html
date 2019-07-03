@@ -10,7 +10,7 @@
             <form [formGroup]="loginForm" (submit)=onLoginSubmit()>
               <mat-form-field style="width: 100%">
                 <mat-label>User Name</mat-label>
-                <input type="text" matInput required formControlName="userName">
+                <input type="text" matInput required formControlName="userName" minlength="3">
               </mat-form-field>
               <mat-form-field style="width: 100%">
                 <mat-label>Password</mat-label>
@@ -51,9 +51,17 @@
                 <mat-hint align="end">Min 5 Chars</mat-hint>
               </mat-form-field>
               <mat-form-field style="width: 100%">
-                <mat-label>Repeat Password</mat-label>
+                <mat-label>Confirm Password</mat-label>
                 <input type="password" matInput required formControlName="repeatPassword">
               </mat-form-field>
+              <div>
+                <button type="button" mat-button (click)="fileInput.click()">
+                  <mat-icon>cloud_upload</mat-icon> upload Image
+                </button>
+                <input (change)=onFileChange($event) formControlName="image" hidden type="file" #fileInput accept="image/*">
+              </div>
+              <img class="img-thumbnail mt-2 mb-2" style="width: 40%" src="{{imageUrl}}" *ngIf="imageUrl">
+              <br>
               <button mat-raised-button color="primary">Register</button>
             </form>
           </mat-card-content>

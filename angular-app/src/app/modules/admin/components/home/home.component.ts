@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
+import { CommonService } from 'src/app/modules/shared/services/common.service';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private _loadingService: LoadingService,
     private _service: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _commonService: CommonService
   ) { }
 
   ngOnInit() {
-    this._service.getUser().subscribe(
+    this._commonService.getStaff().subscribe(
       res => {
         this._loadingService.showLoading();
         this.user = JSON.parse(JSON.stringify(res))
@@ -26,7 +28,8 @@ export class HomeComponent implements OnInit {
       err => {
         console.log(err);
       }
-    )
+    );
+
   };
   logout() {
     this._service.logout().subscribe(res => {

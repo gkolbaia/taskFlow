@@ -13,9 +13,13 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { NgxLoadingModule } from 'ngx-loading';
 import { StaffModule } from './modules/staff/staff.module';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+import { ProfileComponent } from './modules/shared/profile/profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,8 +31,9 @@ import { StaffModule } from './modules/staff/staff.module';
     HttpClientModule,
     AuthModule,
     AdminModule,
+    StaffModule,
     NgxLoadingModule.forRoot({}),
-    StaffModule
+    MatFileUploadModule
   ],
   providers: [AuthService,
     {

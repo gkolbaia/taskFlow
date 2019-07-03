@@ -15,7 +15,7 @@ export class UpdateTokenService {
         tap((res: HttpResponse<any>) => {
           if (res instanceof HttpResponse) {
             const newToken = res['headers'].get('token');
-            localStorage.setItem('token', newToken)
+            localStorage.setItem('token', newToken);
           }
         })
       )

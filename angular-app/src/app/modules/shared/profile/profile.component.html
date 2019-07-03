@@ -1,0 +1,76 @@
+<div class="profile" *ngIf="staff">
+  <mat-card style="display: flex !important;justify-content: space-between; width: 100%">
+    <div style="width: 40%; ">
+      <mat-card class="example-card">
+        <div class="container">
+          <img src="{{profileImagePath}}" class="image" style="width:100%">
+          <div class="middle">
+            <button title="Updae Profile Picture" mat-fab color="warn" (click)="fileInput.click()">
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
+            <input (change)=onFileChange($event) hidden type="file" #fileInput>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div style="width: 60%; margin-left: 10px">
+      <mat-list>
+
+        <!-- username -->
+        <h4 mat-line style="cursor:pointer" (click)="displayEdit('userName')">
+
+          <span style="font-size:18px;">User Name</span>:
+
+          <span *ngIf="un" style="cursor:pointer;">{{_commonService.capitalizeLetters(staff.userName) }}
+            <a style="font-size:13px;text-align: center;float: right; margin-top: 10px" href="javascript:"
+              matSuffix>Edit</a>
+          </span>
+
+          <span *ngIf="!un" style="height: 50px">
+            <form style="display: inline" [formGroup]="userNameForm" (submit)="edit(userName.value,'userName',$event)">
+              <mat-form-field appearance="outline" style="width: 75.3%">
+                <input #userName matInput type="text" value="{{staff.userName}}" required minlength="3" formControlName="userName">
+                <a (click)="edit(userName.value,'userName',$event)" style="font-size:13px;text-align: center"
+                  href="javascript:" matSuffix>Confirm</a>
+              </mat-form-field>
+            </form>
+          </span>
+        </h4>
+        <hr>
+
+        <!-- email -->
+        <h4 mat-line style="cursor:pointer" (click)="displayEdit('email')">
+          <span style="font-size:  18px">Email</span>:
+          <span [hidden]="!em" style="cursor:pointer">{{_commonService.capitalizeLetters(staff.email)}}
+            <a style="font-size:13px;text-align: center;float: right; margin-top: 10px" href="javascript:"
+              matSuffix>Edit</a>
+          </span>
+
+
+          <span [hidden]="em" style="height: 50px">
+            <form [formGroup]="emailForm" style="display: inline" (submit)="edit(email.value,'email',$event)">
+              <mat-form-field appearance="outline" style="width: 86.1%">
+                <input formControlName="email" #email matInput type="text" value="{{staff.email}}" required
+                  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+                <a (click)="edit(email.value,'email',$event)" style="font-size:13px;text-align: center"
+                  href="javascript:" matSuffix>Confirm</a>
+              </mat-form-field>
+            </form>
+          </span>
+        </h4>
+        <hr>
+        <!-- role -->
+        <h4 mat-line>
+          <span style="font-size:  18px">Role</span>:
+          <span>{{_commonService.capitalizeLetters(staff.role)}}</span>
+        </h4>
+        <hr>
+        <!-- date -->
+        <h4 mat-line><span style="font-size:  18px">Started work</span>:
+          <span>{{ staff.regiterDate | date:shortTime }}</span>
+        </h4>
+        <hr>
+      </mat-list>
+    </div>
+  </mat-card>
+</div>

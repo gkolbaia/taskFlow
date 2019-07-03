@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminComponent } from './admin.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuardGuard } from 'src/app/services/auth-guard.guard';
+import { ProfileComponent } from '../shared/profile/profile.component';
+import { AddtaskComponent } from './components/addtask/addtask.component';
 
 
 const routes: Routes =
@@ -13,6 +15,8 @@ const routes: Routes =
       canActivate: [AuthGuardGuard],
       children: [
         { path: '', component: HomeComponent },
+        { path: 'profile', component: ProfileComponent },
+        { path: 'addtask', component: AddtaskComponent }
       ],
     }
   ];

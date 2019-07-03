@@ -23,6 +23,7 @@ module.exports = (req, res, next) => {
             //     return res.status(401).send('Unautorized request');
             // }
             localStorage.setItem('token', newToken);
+            console.log(res);
             next();
         }
     });
